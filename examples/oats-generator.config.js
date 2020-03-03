@@ -2,7 +2,7 @@
  * Example config for `yarn example:advanced`
  */
 
-const { camel } = require("case");
+const { camel, pascal } = require("case");
 
 function customGeneratorHttp({ componentName, verb, route, typeNames, paramsTypes }) {
   if (verb === "get") {
@@ -17,6 +17,25 @@ function customGeneratorHttp({ componentName, verb, route, typeNames, paramsType
       typeNames.body
     }, config?: RequestConfig) => clientInstance.${verb}<${typeNames.response}>(\`${route}\`, body, config)
     `;
+  }
+}
+
+function customGeneratorSwr({ componentName, verb, route, typeNames, paramsTypes }) {
+  if (verb === "get") {
+    /**
+     * export const useListPets = <Data = any, Error = any>(
+        fetcher?: fetcherFn<Data>,
+        config?: ConfigInterface<Data, Error>,
+      ) => useSWR<Data, Error>(`/pets`, fetcher, config);
+     */
+
+    return `
+      export const use${componentName} = <Data = ${typeNames.response}, Error = any>(${
+      paramsTypes ? paramsTypes + "," : ""
+    }fetcher?: fetcherFn<Data>, config?: ConfigInterface<Data, Error>) => useSWR<Data, Error>(\`${route}\`, fetcher, config)
+    `;
+  } else {
+    return "";
   }
 }
 
@@ -40,10 +59,10 @@ module.exports = {
       import { HttpClient, RequestConfig } from './Http'
       export const clientInstance = new HttpClient();
     `,
-    customGeneratorHttp,
+    customGenerator: customGeneratorHttp,
   },
   "petstore-custom-operation": {
-    file: "swagger.json",
+    file: "examples/petstore.yaml",
     output: "examples/petstoreFromFileSpecWithCustomOperation.ts",
     customOperationNameGenerator: ({ verb, route }) => {
       const words = route.replace("/api/v1/", "").split("/");
@@ -61,6 +80,15 @@ module.exports = {
       import { HttpClient, RequestConfig } from './Http'
       export const clientInstance = new HttpClient();
     `,
-    customGeneratorHttp,
+    customGenerator: customGeneratorHttp,
+  },
+  "petstore-swr": {
+    file: "examples/petstore.yaml",
+    output: "examples/petstoreSwr.ts",
+    customImport: `
+      import useSWR from "swr";
+      import { fetcherFn, ConfigInterface } from "swr/dist/types";
+    `,
+    customGenerator: customGeneratorSwr,
   },
 };

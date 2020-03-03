@@ -59,7 +59,6 @@
     "example:advanced": "node dist/bin/oats-generator.js import --config examples/oats-generator.config.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
     "case": "^1.6.2",
     "chalk": "^3.0.0",
     "commander": "^4.1.0",
@@ -100,6 +99,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^1.29.0",
     "rollup-plugin-typescript2": "^0.25.3",
+    "swr": "^0.1.18",
     "tsdx": "^0.12.1",
     "tslint": "^5.20.1",
     "typescript": "^3.7.4"
