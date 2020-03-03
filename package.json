@@ -1,0 +1,112 @@
+{
+  "name": "@tpdewolf/oats-generator",
+  "version": "1.0.8",
+  "description": "A typescript code generator from Swagger and OpenAPI specs",
+  "keywords": [
+    "openapi",
+    "typescript",
+    "client",
+    "fetch",
+    "data fetching"
+  ],
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Tejas Kumar",
+      "email": "tejas@tejas.qa",
+      "url": "https://twitter.com/tejaskumar_"
+    },
+    {
+      "name": "Fabien Bernard",
+      "email": "fabien@contiamo.com",
+      "url": "https://fabien0102.com/en"
+    },
+    {
+      "name": "Tim de Wolf",
+      "email": "tpdewolf@gmail.com",
+      "url": "https://twitter.com/tpdewolf"
+    }
+  ],
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "oats-generator": "dist/bin/oats-generator.js"
+  },
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "module": "dist/oats-generator.esm.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tpdewolf/oats-generator"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "build": "run-p build:*",
+    "build:project": "tsdx build",
+    "build:bin": "tsc && rollup -c rollup.config.js",
+    "postbuild": "rimraf dist/**/*.test.*",
+    "version": "auto-changelog -p && git add CHANGELOG.md",
+    "examples": "run-p example:*",
+    "example:github": "node dist/bin/oats-generator.js import --github OAI:OpenAPI-Specification:master:examples/v3.0/petstore.yaml --output examples/petstoreFromGithubSpec.tsx",
+    "example:url": "node dist/bin/oats-generator.js import --url https://petstore.swagger.io/v2/swagger.json --output examples/petstoreFromUrlSpec.tsx",
+    "example:file": "node dist/bin/oats-generator.js import --file examples/petstore.yaml --output examples/petstoreFromFileSpec.tsx",
+    "example:advanced": "node dist/bin/oats-generator.js import --config examples/oats-generator.config.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "case": "^1.6.2",
+    "chalk": "^3.0.0",
+    "commander": "^4.1.0",
+    "ibm-openapi-validator": "^0.16.0",
+    "inquirer": "^7.0.3",
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
+    "openapi3-ts": "^1.3.0",
+    "qs": "^6.9.1",
+    "react-fast-compare": "^2.0.4",
+    "request": "^2.88.0",
+    "slash": "^3.0.0",
+    "swagger2openapi": "^5.3.2",
+    "tslib": "^1.10.0",
+    "url": "^0.11.0",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/commander": "^2.12.2",
+    "@types/inquirer": "6.5.0",
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/jest": "^24.0.25",
+    "@types/lodash": "^4.14.149",
+    "@types/nock": "^11.1.0",
+    "@types/node": "^13.1.6",
+    "@types/prettier": "^1.19.0",
+    "@types/qs": "^6.9.0",
+    "@types/request": "^2.48.4",
+    "@types/yamljs": "^0.2.30",
+    "auto-changelog": "^1.16.2",
+    "doctoc": "^1.4.0",
+    "husky": "^4.0.7",
+    "isomorphic-fetch": "^2.2.1",
+    "nock": "^11.7.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^1.29.0",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "tsdx": "^0.12.1",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  }
+}
