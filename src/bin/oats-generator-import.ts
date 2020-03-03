@@ -28,6 +28,7 @@ export type AdvancedOptions = Options & {
     base?: string;
   };
   customOperationNameGenerator?: (data: { verb: string; route: string }) => string;
+  customGeneratorWrap?: (children: string) => string;
   customGenerator?: (data: {
     componentName: string;
     verb: string;
@@ -84,6 +85,7 @@ const importSpecs = async (options: AdvancedOptions) => {
       customImport: options.customImport,
       customProps: options.customProps,
       customGenerator: options.customGenerator,
+      customGeneratorWrap: options.customGeneratorWrap,
       customOperationNameGenerator: options.customOperationNameGenerator,
     });
   } else if (options.url) {
@@ -120,6 +122,7 @@ const importSpecs = async (options: AdvancedOptions) => {
             customImport: options.customImport,
             customProps: options.customProps,
             customGenerator: options.customGenerator,
+            customGeneratorWrap: options.customGeneratorWrap,
             customOperationNameGenerator: options.customOperationNameGenerator,
           }),
         );
@@ -208,6 +211,7 @@ const importSpecs = async (options: AdvancedOptions) => {
             customImport: options.customImport,
             customProps: options.customProps,
             customGenerator: options.customGenerator,
+            customGeneratorWrap: options.customGeneratorWrap,
             customOperationNameGenerator: options.customOperationNameGenerator,
           }),
         );
